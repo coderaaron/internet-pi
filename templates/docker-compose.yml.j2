@@ -43,6 +43,7 @@ services:
     links:
       - ping:ping
       - speedtest:speedtest
+      - nut-exporter:nut-exporter
     networks:
       - back-tier
 {% if domain_name_enable and domain_name and domain_prometheus %}
@@ -124,3 +125,22 @@ services:
       - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
     networks:
       - back-tier
+
+{% if nut_enable %}
+  nut-exporter:
+    # Stable v1
+    image: hon95/prometheus-nut-exporter:1
+    environment:
+      TZ: '{{ nut_timezone }}'
+      HTTP_PATH: '{{ nut_http_path }}'
+      # Defaults
+      #RUST_LOG=info
+      #HTTP_PORT=9995
+      #HTTP_PATH=/nut
+      #LOG_REQUESTS_CONSOLE=false
+      #PRINT_METRICS_AND_EXIT=false
+    ports:
+      - 9995:9995
+    networks:
+      - back-tier
+{% endif %}

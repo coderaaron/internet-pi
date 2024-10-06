@@ -43,10 +43,6 @@
       ansible.builtin.import_tasks: tasks/homebridge.yml
       when: homebridge_enable
 
-    - name: Set up NUT.
-      ansible.builtin.import_tasks: tasks/nut.yml
-      when: nut_enable
-
     - name: Set up Shelly Plug Monitoring.
       ansible.builtin.import_tasks: tasks/shelly-plug.yml
       when: shelly_plug_enable
