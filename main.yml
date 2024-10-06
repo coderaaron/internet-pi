@@ -38,6 +38,14 @@
     - name: Set up Pi Hole.
       ansible.builtin.import_tasks: tasks/pi-hole.yml
       when: pihole_enable
+    
+    - name: Set up Homebridge.
+      ansible.builtin.import_tasks: tasks/homebridge.yml
+      when: homebridge_enable
+
+    - name: Set up NUT.
+      ansible.builtin.import_tasks: tasks/nut.yml
+      when: nut_enable
 
     - name: Set up Shelly Plug Monitoring.
       ansible.builtin.import_tasks: tasks/shelly-plug.yml

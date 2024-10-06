@@ -1,0 +1,15 @@
+services:
+  nut-exporter:
+    # Stable v1
+    image: hon95/prometheus-nut-exporter:1
+    environment:
+      - TZ: '{{ nut_timezone }}'
+      - HTTP_PATH: '{{ nut_http_path }}'
+      # Defaults
+      #- RUST_LOG=info
+      #- HTTP_PORT=9995
+      #- HTTP_PATH=/nut
+      #- LOG_REQUESTS_CONSOLE=false
+      #- PRINT_METRICS_AND_EXIT=false
+    ports:
+      - "9995:9995/tcp"

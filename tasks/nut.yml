@@ -1,0 +1,22 @@
+---
+- name: Create NUT folder on Pi.
+  ansible.builtin.file:
+    path: "{{ config_dir }}/nut"
+    state: directory
+    mode: 0755
+  become: false
+  register: nut_dir
+
+- name: Copy NUT docker-compose template to Pi.
+  ansible.builtin.template:
+    src: templates/nut-docker-compose.yml.j2
+    dest: "{{ nut_dir.path }}/docker-compose.yml"
+    mode: '0640'
+  become: false
+  notify: Restart nut
+
+- name: Ensure NUT is running.
+  community.docker.docker_compose_v2:
+    project_src: "{{ nut_dir.path }}/"
+    build: never
+  become: false

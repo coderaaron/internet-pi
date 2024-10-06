@@ -1,0 +1,23 @@
+# {{ ansible_managed }}
+---
+{% if domain_name_enable and domain_name and domain_homebridge %}
+{# Make sure homebridge and nginx-proxy are in the same network #}
+networks:
+  front-tier:
+    name: internet-monitoring-front-tier
+    external: true
+{% endif %}
+
+services:
+  homebridge:
+    container_name: homebridge
+    image: homebridge/homebridge:ubuntu
+    restart: always
+    networks:
+      - front-tier
+    environment:
+      - HOMEBRIDGE_CONFIG_UI_PORT=8581
+    volumes:
+      - homebridge:/homebridge
+volumes:
+  homebridge:

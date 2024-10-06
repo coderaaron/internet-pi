@@ -1,0 +1,22 @@
+---
+- name: Create Homebridge folder on Pi.
+  ansible.builtin.file:
+    path: "{{ config_dir }}/homebridge"
+    state: directory
+    mode: 0755
+  become: false
+  register: homebridge_dir
+
+- name: Copy Homebridge docker-compose template to Pi.
+  ansible.builtin.template:
+    src: templates/homebridge-docker-compose.yml.j2
+    dest: "{{ homebridge_dir.path }}/docker-compose.yml"
+    mode: '0640'
+  become: false
+  notify: Restart homebridge
+
+- name: Ensure Homebridge is running.
+  community.docker.docker_compose_v2:
+    project_src: "{{ homebridge_dir.path }}/"
+    build: never
+  become: false
