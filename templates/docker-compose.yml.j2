@@ -143,4 +143,6 @@ services:
       - 9995:9995
     networks:
       - back-tier
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 {% endif %}
