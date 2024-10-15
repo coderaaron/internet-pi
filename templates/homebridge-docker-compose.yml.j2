@@ -18,9 +18,7 @@ services:
     networks:
       - front-tier
       - back-tier
-{% if domain_name_enable and domain_name and domain_grafana %}
-    depends_on:
-      - nginx-proxy
+{% if domain_name_enable and domain_name and domain_homebridge %}
     environment:
       - VIRTUAL_HOST={{ domain_homebridge }}.{{ domain_name }}
       - VIRTUAL_PORT=8581
