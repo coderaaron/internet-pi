@@ -6,6 +6,8 @@ networks:
   front-tier:
     name: internet-monitoring-front-tier
     external: true
+  back-tier:
+    name: internet-monitoring-back-tier
 {% endif %}
 
 services:
@@ -15,8 +17,14 @@ services:
     restart: always
     networks:
       - front-tier
+      - back-tier
+{% if domain_name_enable and domain_name and domain_grafana %}
+    depends_on:
+      - nginx-proxy
     environment:
-      - HOMEBRIDGE_CONFIG_UI_PORT=8581
+      - VIRTUAL_HOST={{ domain_homebridge }}.{{ domain_name }}
+      - VIRTUAL_PORT=8581
+{% endif %}
     volumes:
       - homebridge:/homebridge
 volumes:
