@@ -6,8 +6,6 @@ networks:
   front-tier:
     name: internet-monitoring-front-tier
     external: true
-  back-tier:
-    name: internet-monitoring-back-tier
 {% endif %}
 
 services:
@@ -15,8 +13,6 @@ services:
     container_name: homebridge
     image: homebridge/homebridge:ubuntu
     restart: always
-    ports:
-      - "5353:5353/udp"
     networks:
       - front-tier
       - back-tier
