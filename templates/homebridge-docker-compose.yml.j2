@@ -13,8 +13,6 @@ services:
     container_name: homebridge
     image: homebridge/homebridge:ubuntu
     restart: always
-    ports:
-      - "5353:5353/udp"
     networks:
       - front-tier
 {% if domain_name_enable and domain_name and domain_homebridge %}
