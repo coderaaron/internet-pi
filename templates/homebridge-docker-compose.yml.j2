@@ -15,6 +15,8 @@ services:
     container_name: homebridge
     image: homebridge/homebridge:ubuntu
     restart: always
+    ports:
+      - "5353:5353/udp"
     networks:
       - front-tier
       - back-tier
@@ -22,7 +24,6 @@ services:
     environment:
       - VIRTUAL_HOST={{ domain_homebridge }}.{{ domain_name }}
       - VIRTUAL_PORT=8581
-      - VIRTUAL_PORT=5353
 {% endif %}
     volumes:
       - homebridge:/homebridge
