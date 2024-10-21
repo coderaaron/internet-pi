@@ -3,6 +3,7 @@
 volumes:
   prometheus_data: {}
   grafana_data: {}
+  portainer_data: {}
 
 networks:
   front-tier:
@@ -145,4 +146,21 @@ services:
       - back-tier
     extra_hosts:
       - "host.docker.internal:host-gateway"
+{% endif %}
+
+{% if portainer_enable %}
+  portainer:
+    image: portainer/portainer-ce:2.0.0
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    networks:
+      - back-tier
+    ports:
+      - 8000:8000
+    environment:
+      - VIRTUAL_HOST=portainer.home.local
+      - VIRTUAL_PORT=9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
 {% endif %}
