@@ -11,9 +11,8 @@ domain_prometheus: 'prometheus'  # to access prometheus via: http://prometheus.h
 domain_homebridge: 'homebridge'  # to access homebridge via: http://homebridge.home.local
 domain_portainer: 'portainer'  # to access portainer via: http://homebridge.home.local
 
-# Pi-hole configuration.
+# Portainer configuration.
 portainer_enable: true
-portainer_hostname: portainer
 
 # Pi-hole configuration.
 pihole_enable: true
