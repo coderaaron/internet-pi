@@ -65,6 +65,7 @@ services:
 {% if domain_name_enable and domain_name and domain_portainer %}
       - "{{ domain_portainer }}.{{ domain_name }}:{{ ansible_facts['default_ipv4']['address'] }}"
 {% endif %}
+      - "wyze-bridge.{{ domain_name }}:{{ ansible_facts['default_ipv4']['address'] }}"
 {% endif %}
 
   pihole-exporter:
