@@ -38,7 +38,7 @@
     - name: Set up Pi Hole.
       ansible.builtin.import_tasks: tasks/pi-hole.yml
       when: pihole_enable
-    
+
     - name: Set up Homebridge.
       ansible.builtin.import_tasks: tasks/homebridge.yml
       when: homebridge_enable
