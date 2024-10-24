@@ -24,7 +24,6 @@ services:
     environment:
       - VIRTUAL_HOST={{ domain_homebridge }}.{{ domain_name }}
       - VIRTUAL_PORT=8581
-      - ENABLE_AVAHI=0
 {% endif %}
     volumes:
       - homebridge:/homebridge
