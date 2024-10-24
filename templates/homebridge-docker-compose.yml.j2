@@ -1,8 +1,5 @@
 # {{ ansible_managed }}
 --
-volumes:
-  homebridge: {}
-
 {% if domain_name_enable and domain_name and domain_homebridge %}
 {# Make sure homebridge and nginx-proxy are in the same network #}
 networks:
@@ -28,6 +25,9 @@ services:
     volumes:
       - homebridge:/homebridge
       - {{ config_dir }}/homebridge/config.json:/homebridge/config.json
+
+volumes:
+  homebridge: 
 
   wyze-bridge:
       container_name: wyze-bridge
