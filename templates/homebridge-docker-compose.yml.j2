@@ -1,5 +1,8 @@
 # {{ ansible_managed }}
----
+--
+volumes:
+  homebridge: {}
+
 {% if domain_name_enable and domain_name and domain_homebridge %}
 {# Make sure homebridge and nginx-proxy are in the same network #}
 networks:
@@ -31,6 +34,8 @@ services:
       container_name: wyze-bridge
       restart: unless-stopped
       image: mrlt8/wyze-bridge:latest
+      networks:
+      - back-tier
       ports:
           - 1935:1935 # RTMP
           - 8554:8554 # RTSP
@@ -39,20 +44,20 @@ services:
           - 8189:8189/udp # WebRTC/ICE
           - 5000:5000 # WEB-UI
       environment:
-          - VIRTUAL_HOST=wyze-bridge.{{ domain_name }}
+          - VIRTUAL_HOST={{domain_wyze_bridge}}.{{ domain_name }}
           - VIRTUAL_PORT=5000
           # [OPTIONAL] Credentials can be set in the WebUI
           # API Key and ID can be obtained from the wyze dev portal: 
           # https://developer-api-console.wyze.com/#/apikey/view
-          - WYZE_EMAIL=
-          - WYZE_PASSWORD= 
-          - API_ID=
-          - API_KEY= 
+          - WYZE_EMAIL={{wyze_email}}
+          - WYZE_PASSWORD={{wyze_password}} 
+          - API_ID={{api_id}}
+          - API_KEY={{api_key}} 
           # [OPTIONAL] IP Address of the host to enable WebRTC e.g.,:
-          - WB_IP=192.168.1.94
+          # TODO FIGURE OUT HOW TO SET THIS
+          # - WB_IP={{wb_ip}}
+          - WB_IP=
           # WebUI and Stream authentication:
           - WB_AUTH=false # Set to false to disable web and stream auth.
           # WB_USERNAME=
           # WB_PASSWORD=
-volumes:
-  homebridge:
